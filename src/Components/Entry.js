@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import App from "./Components/App/App";
+import App from "./App/App";
 class Entry extends Component {
   render() {
     return (

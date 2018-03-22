@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import Entry from "./Entry";
+import Entry from "./Components/Entry";
 import registerServiceWorker from "./registerServiceWorker";
 
 ReactDOM.render(<Entry />, document.getElementById("root"));
