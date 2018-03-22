@@ -38,10 +38,16 @@ describe("APP TESTS ...", () => {
     const wrapper = shallow(<App />);
     const fakeEvent = { preventDefault: () => console.log("preventDefault") };
 
-    expect(wrapper.props().children).toHaveLength(1);
+    expect(wrapper.props().children[1]).toBe(undefined);
     wrapper.find("form").simulate("submit", fakeEvent);
     //this console log saved the day!
     console.log(wrapper.props().children);
-    expect(wrapper.props().children).toHaveLength(2);
+    console.log(wrapper.find("Welcome"));
+    // expect(wrapper.props().children[1]).toBe(
+    //   <div>
+    //     <Welcome name="" />
+    //   </div>
+    // );
+    expect(wrapper.find("Welcome")).toHaveLength(1);
   });
 });
