@@ -26,14 +26,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* <Welcome name={"Gavin"} /> */}
-        <div>
-          <form onSubmit={this.handleSubmit}>
+        <div className="formDiv">
+          <form className={"basicForm"} onSubmit={this.handleSubmit}>
             <label>
               Name:
               <input type="text" name="name" onChange={this.handleChange} />
             </label>
-            <input type="submit" value="Submit" />
+            <input className="formButton" type="submit" value="Submit" />
           </form>{" "}
         </div>
         {this.state.showWelcome ? (
