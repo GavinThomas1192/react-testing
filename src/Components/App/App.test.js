@@ -38,7 +38,7 @@ describe("APP TESTS ...", () => {
     const wrapper = shallow(<App />);
     const fakeEvent = { preventDefault: () => console.log("preventDefault") };
 
-    expect(wrapper.props().children).toHaveLength(2);
+    expect(wrapper.props().children).toHaveLength(1);
     wrapper.find("form").simulate("submit", fakeEvent);
     //this console log saved the day!
     console.log(wrapper.props().children);
