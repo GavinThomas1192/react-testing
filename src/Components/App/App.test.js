@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { shallow, mount } from "enzyme";
+import sinon from "sinon";
 
 import App from "./App";
+import Welcome from "../Welcome/Welcome";
 
 describe("APP TESTS ...", () => {
   it("renders without crashing", () => {
@@ -28,16 +30,18 @@ describe("APP TESTS ...", () => {
 
   it("Does not render <Welcome /> until user inputs their name", () => {
     const wrapper = shallow(<App />);
-    expect(wrapper.find("Welcome")).toHaveLength(0);
+    expect(wrapper.find(<Welcome />)).toHaveLength(0);
   });
 
   it("Does render <Welcome /> after user inputs their name", () => {
+    const mockCallBack = sinon.spy();
     const wrapper = shallow(<App />);
-    expect(wrapper.find("Welcome")).toHaveLength(0);
+    const fakeEvent = { preventDefault: () => console.log("preventDefault") };
 
-    // const fakeEvent = { preventDefault: () => console.log("preventDefault") };
-
-    wrapper.find("button").simulate("submit");
-    expect(wrapper.find("Welcome")).toHaveLength(1);
+    expect(wrapper.props().children).toHaveLength(2);
+    wrapper.find("form").simulate("submit", fakeEvent);
+    //this console log saved the day!
+    console.log(wrapper.props().children);
+    expect(wrapper.props().children).toHaveLength(2);
   });
 });
