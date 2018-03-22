@@ -16,17 +16,28 @@ describe("APP TESTS ...", () => {
     expect(wrapper.find(".basicForm")).toHaveLength(1);
   });
 
-  it("Renders both inputs for name and submit ", () => {
+  it("Renders inputs for name ", () => {
     const wrapper = shallow(<App />);
-    expect(wrapper.find("input")).toHaveLength(2);
+    expect(wrapper.find("input")).toHaveLength(1);
   });
 
-  it("Renders submit input on form ", () => {
+  it("Renders button for submit ", () => {
     const wrapper = shallow(<App />);
     expect(wrapper.find(".formButton")).toHaveLength(1);
   });
 
-  it("Renders Welcome component when user clicks submit", () => {
-    const wrapper = shallow(<Welcome name="Gavin" />);
+  it("Does not render <Welcome /> until user inputs their name", () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.find("Welcome")).toHaveLength(0);
+  });
+
+  it("Does render <Welcome /> after user inputs their name", () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.find("Welcome")).toHaveLength(0);
+
+    // const fakeEvent = { preventDefault: () => console.log("preventDefault") };
+
+    wrapper.find("button").simulate("submit");
+    expect(wrapper.find("Welcome")).toHaveLength(1);
   });
 });

@@ -32,7 +32,9 @@ class App extends Component {
               Name:
               <input type="text" name="name" onChange={this.handleChange} />
             </label>
-            <input className="formButton" type="submit" value="Submit" />
+            <button className="formButton" type="submit" value="Submit">
+              Submit
+            </button>
           </form>{" "}
         </div>
         {this.state.showWelcome ? (
