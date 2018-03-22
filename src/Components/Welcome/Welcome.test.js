@@ -23,11 +23,7 @@ describe("WELCOME TESTS WITH valid DATA...", () => {
     expect(wrapper.find("h2").text()).toEqual("Welcome Whoops!");
   });
   it("renders should error when provided with a numbers", () => {
-    // const wrapper = shallow(<Welcome name={8} />);
     expect(() => shallow(<Welcome name={8} />).toThrow());
-
-    // sinon.assert.callCount(console.error, 1);
-    // expectMissingProp("name", "Welcome");
   });
 });
 describe("WELCOME TESTS WITH bad DATA...", () => {});
