@@ -34,18 +34,28 @@ describe("APP TESTS ...", () => {
       target: { name: "name", value: "Gavin" }
     });
     expect(wrapper.state("name")).toEqual("Gavin");
+    expect(wrapper.state("error")).toEqual("");
+    expect(wrapper.find(".input")).toHaveLength(1);
+    expect(wrapper.find(".inputError")).toHaveLength(0);
+    expect(wrapper.find(".errorDiv")).toHaveLength(0);
   });
 
-  it("Throws error when user tries to use a number inside their name", () => {
+  it("Throws ERROR when user tries to use a number inside their name", () => {
     const wrapper = shallow(<App />);
-
-    expect(
-      wrapper
-        .find("input")
-        .simulate("change", {
-          target: { name: "name", value: "Gavin1192" }
-        })
-        .toThrow("typeerrr")
+    //Target form
+    wrapper.find("input").simulate("change", {
+      target: { name: "name", value: "Gavin1192" }
+    });
+    //Check local state to have error message
+    expect(wrapper.state("error")).toEqual("Whoops, letters only please");
+    //Change appropriate css classname if state has error
+    expect(wrapper.find(".input")).toHaveLength(0);
+    expect(wrapper.find(".inputError")).toHaveLength(1);
+    //Check if error message popup showed
+    expect(wrapper.find(".errorDiv")).toHaveLength(1);
+    //Check content of said popup
+    expect(wrapper.find("p").props().children).toBe(
+      "Whoops your name can only have letters!"
     );
   });
 

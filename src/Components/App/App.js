@@ -40,13 +40,13 @@ class App extends Component {
               Submit
             </button>
           </form>{" "}
-          <div>
-            {this.state.error ? (
+          {this.state.error ? (
+            <div className="errorDiv">
               <p>Whoops your name can only have letters!</p>
-            ) : (
-              undefined
-            )}
-          </div>
+            </div>
+          ) : (
+            undefined
+          )}
         </div>
         {this.state.showWelcome ? (
           <div>
