@@ -25,10 +25,10 @@ describe("SHOPPINGLIST TESTS WITH valid DATA...", () => {
 describe("WELCOME TESTS WITH bad DATA...", () => {
   it("Should NOT render any list if the groceryList array is empty", () => {
     const wrapper = shallow(<ShoppingList />);
-    expect(wrapper.state("groceryList")).toEqual([]);
+    wrapper.setState({ groceryList: [] });
     expect(wrapper.find("ul").children()).toHaveLength(0);
-    expect(wrapper.find("p").children()).toBe(
-      "Whoops, your grocery list is empty"
+    expect(wrapper.find("p").props().children).toBe(
+      "Whoops, your grocery list is empty!"
     );
   });
 });
