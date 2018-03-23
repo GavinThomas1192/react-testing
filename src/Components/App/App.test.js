@@ -38,16 +38,18 @@ describe("APP TESTS ...", () => {
     const wrapper = shallow(<App />);
     const fakeEvent = { preventDefault: () => console.log("preventDefault") };
 
+    expect(wrapper.find("Welcome")).toHaveLength(0);
     expect(wrapper.props().children[1]).toBe(undefined);
     wrapper.find("form").simulate("submit", fakeEvent);
-    //this console log saved the day!
     console.log(wrapper.props().children);
     console.log(wrapper.find("Welcome"));
-    // expect(wrapper.props().children[1]).toBe(
-    //   <div>
-    //     <Welcome name="" />
-    //   </div>
-    // );
     expect(wrapper.find("Welcome")).toHaveLength(1);
+  });
+  it("Does change state based on user typing their name", () => {
+    const wrapper = shallow(<App />);
+    wrapper.find("input").simulate("change", {
+      target: { name: "name", value: "Gavin" }
+    });
+    expect(wrapper.state("name")).toEqual("Gavin");
   });
 });

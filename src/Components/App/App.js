@@ -20,9 +20,9 @@ class App extends Component {
     this.setState({ showWelcome: true });
   };
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
+  // componentDidUpdate() {
+  //   console.log(this.state);
+  // }
   render() {
     return (
       <div className="App">
