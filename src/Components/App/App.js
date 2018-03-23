@@ -21,7 +21,9 @@ class App extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    !this.state.error ? this.setState({ showWelcome: true }) : undefined;
+    !this.state.error && this.state.name !== ""
+      ? this.setState({ showWelcome: true })
+      : this.setState({ error: "Whoops, you didn't enter anything!" });
   };
 
   componentDidUpdate() {
@@ -42,7 +44,7 @@ class App extends Component {
           </form>{" "}
           {this.state.error ? (
             <div className="errorDiv">
-              <p>Whoops your name can only have letters!</p>
+              <p>{this.state.error}</p>
             </div>
           ) : (
             undefined

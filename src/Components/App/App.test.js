@@ -40,6 +40,28 @@ describe("APP TESTS ...", () => {
     expect(wrapper.find(".errorDiv")).toHaveLength(0);
   });
 
+  it("Does not render <Welcome /> until user inputs their name", () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.find(<Welcome />)).toHaveLength(0);
+  });
+
+  it("Does render <Welcome /> after user inputs their name", () => {
+    // const mockCallBack = sinon.spy();
+    const wrapper = shallow(<App />);
+    const fakeEvent = { preventDefault: () => console.log("preventDefault") };
+
+    expect(wrapper.find("Welcome")).toHaveLength(0);
+    expect(wrapper.props().children[1]).toBe(undefined);
+    wrapper.find("input").simulate("change", {
+      target: { name: "name", value: "Gavin" }
+    });
+    wrapper.find("form").simulate("submit", fakeEvent);
+    expect(wrapper.find("Welcome")).toHaveLength(1);
+    expect(wrapper.find("Welcome").props().name).toBe("Gavin");
+  });
+});
+
+describe("APP FAILING/ERROR THROWING TESTS...", () => {
   it("Throws ERROR when user tries to use a number inside their name", () => {
     const wrapper = shallow(<App />);
     //Target form
@@ -55,25 +77,26 @@ describe("APP TESTS ...", () => {
     expect(wrapper.find(".errorDiv")).toHaveLength(1);
     //Check content of said popup
     expect(wrapper.find("p").props().children).toBe(
-      "Whoops your name can only have letters!"
+      "Whoops, letters only please"
     );
   });
-
-  it("Does not render <Welcome /> until user inputs their name", () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.find(<Welcome />)).toHaveLength(0);
-  });
-
-  it("Does render <Welcome /> after user inputs their name", () => {
-    const mockCallBack = sinon.spy();
+  it("Throws ERROR when user doesn't enter any name", () => {
     const wrapper = shallow(<App />);
     const fakeEvent = { preventDefault: () => console.log("preventDefault") };
 
-    expect(wrapper.find("Welcome")).toHaveLength(0);
-    expect(wrapper.props().children[1]).toBe(undefined);
+    wrapper.find("input").simulate("change", {
+      target: { name: "name", value: "" }
+    });
     wrapper.find("form").simulate("submit", fakeEvent);
-    console.log(wrapper.props().children);
-    console.log(wrapper.find("Welcome"));
-    expect(wrapper.find("Welcome")).toHaveLength(1);
+
+    expect(wrapper.state("error")).toEqual(
+      "Whoops, you didn't enter anything!"
+    );
+    expect(wrapper.find(".input")).toHaveLength(0);
+    expect(wrapper.find(".inputError")).toHaveLength(1);
+    expect(wrapper.find(".errorDiv")).toHaveLength(1);
+    expect(wrapper.find("p").props().children).toBe(
+      "Whoops, you didn't enter anything!"
+    );
   });
 });
