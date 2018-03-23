@@ -1,12 +1,9 @@
 import React from "react";
 
 export default class ShoppingList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      groceryList: ["eggs"]
-    };
-  }
+  state = {
+    groceryList: ["eggs", "milk"]
+  };
 
   render() {
     return (
