@@ -22,7 +22,7 @@ describe("WELCOME TESTS WITH valid DATA...", () => {
     const wrapper = shallow(<Welcome />);
     expect(wrapper.find("h2").text()).toEqual("Welcome Whoops!");
   });
-  it("renders should error when provided with a numbers", () => {
+  it("should error when provided with a numbers", () => {
     expect(() => shallow(<Welcome name={8} />).toThrow());
   });
 });

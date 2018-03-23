@@ -80,23 +80,41 @@ describe("APP FAILING/ERROR THROWING TESTS...", () => {
       "Whoops, letters only please"
     );
   });
+  it("Doesn't allow a submit with numbers in their name", () => {
+    const wrapper = shallow(<App />);
+    const fakeEvent = { preventDefault: () => console.log("preventDefault") };
+
+    //Target form
+    wrapper.find("input").simulate("change", {
+      target: { name: "name", value: "Gavin1192" }
+    });
+    wrapper.find("form").simulate("submit", fakeEvent);
+
+    //Check local state to have error message
+    expect(wrapper.state("error")).toEqual("Whoops, letters only please");
+    //Change appropriate css classname if state has error
+    expect(wrapper.find(".input")).toHaveLength(0);
+    expect(wrapper.find(".inputError")).toHaveLength(1);
+    //Check if error message popup showed
+    expect(wrapper.find(".errorDiv")).toHaveLength(1);
+    //Check content of said popup
+    expect(wrapper.find("p").props().children).toBe(
+      "Whoops, letters only please"
+    );
+  });
   it("Throws ERROR when user doesn't enter any name", () => {
     const wrapper = shallow(<App />);
     const fakeEvent = { preventDefault: () => console.log("preventDefault") };
 
-    wrapper.find("input").simulate("change", {
-      target: { name: "name", value: "" }
-    });
+    wrapper.setState({ name: "" });
     wrapper.find("form").simulate("submit", fakeEvent);
 
-    expect(wrapper.state("error")).toEqual(
-      "Whoops, you didn't enter anything!"
-    );
+    expect(wrapper.state("error")).toEqual("Whoops, you didn't give a name");
     expect(wrapper.find(".input")).toHaveLength(0);
     expect(wrapper.find(".inputError")).toHaveLength(1);
     expect(wrapper.find(".errorDiv")).toHaveLength(1);
     expect(wrapper.find("p").props().children).toBe(
-      "Whoops, you didn't enter anything!"
+      "Whoops, you didn't give a name"
     );
   });
 });

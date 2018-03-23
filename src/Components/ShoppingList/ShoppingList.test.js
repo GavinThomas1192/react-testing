@@ -22,7 +22,7 @@ describe("SHOPPINGLIST TESTS WITH valid DATA...", () => {
     );
   });
 });
-describe("WELCOME TESTS WITH bad DATA...", () => {
+describe("SHIPPINGLIST TESTS WITH bad DATA...", () => {
   it("Should NOT render any list if the groceryList array is empty", () => {
     const wrapper = shallow(<ShoppingList />);
     wrapper.setState({ groceryList: [] });

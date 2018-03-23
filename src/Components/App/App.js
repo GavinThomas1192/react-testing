@@ -18,15 +18,16 @@ class App extends Component {
   handleChange = e => {
     !/^[a-zA-Z]+$/.test(e.target.value)
       ? this.setState({ error: "Whoops, letters only please" })
-      : this.setState({ error: "" });
-    this.setState({ name: e.target.value });
+      : this.setState({ error: "", name: e.target.value });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    !this.state.error && this.state.name !== ""
-      ? this.setState({ showWelcome: true })
-      : this.setState({ error: "Whoops, you didn't enter anything!" });
+    if (this.state.error === "" && this.state.name !== "") {
+      this.setState({ showWelcome: true });
+    } else if (this.state.name === "" && this.state.error === "") {
+      this.setState({ error: "Whoops, you didn't give a name" });
+    }
   };
 
   componentDidUpdate() {
