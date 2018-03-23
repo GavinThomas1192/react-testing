@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 
+import ShoppingList from "../ShoppingList/ShoppingList";
+
 import Welcome from "../Welcome/Welcome";
 
 class App extends Component {
@@ -12,6 +14,7 @@ class App extends Component {
       error: ""
     };
   }
+
   handleChange = e => {
     !/^[a-zA-Z]+$/.test(e.target.value)
       ? this.setState({ error: "Whoops, letters only please" })
@@ -42,6 +45,7 @@ class App extends Component {
               Submit
             </button>
           </form>{" "}
+          {/* If error display the error message! */}
           {this.state.error ? (
             <div className="errorDiv">
               <p>{this.state.error}</p>
@@ -50,9 +54,11 @@ class App extends Component {
             undefined
           )}
         </div>
+        {/* If valid name display welcome! */}
         {this.state.showWelcome ? (
           <div>
             <Welcome name={this.state.name} />
+            <ShoppingList updateHomeState={this.updateHomeState} />
           </div>
         ) : (
           undefined
