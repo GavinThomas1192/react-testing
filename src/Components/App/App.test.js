@@ -28,6 +28,27 @@ describe("APP TESTS ...", () => {
     expect(wrapper.find(".formButton")).toHaveLength(1);
   });
 
+  it("Does change state based on user typing their name", () => {
+    const wrapper = shallow(<App />);
+    wrapper.find("input").simulate("change", {
+      target: { name: "name", value: "Gavin" }
+    });
+    expect(wrapper.state("name")).toEqual("Gavin");
+  });
+
+  it("Throws error when user tries to use a number inside their name", () => {
+    const wrapper = shallow(<App />);
+
+    expect(
+      wrapper
+        .find("input")
+        .simulate("change", {
+          target: { name: "name", value: "Gavin1192" }
+        })
+        .toThrow("typeerrr")
+    );
+  });
+
   it("Does not render <Welcome /> until user inputs their name", () => {
     const wrapper = shallow(<App />);
     expect(wrapper.find(<Welcome />)).toHaveLength(0);
@@ -44,12 +65,5 @@ describe("APP TESTS ...", () => {
     console.log(wrapper.props().children);
     console.log(wrapper.find("Welcome"));
     expect(wrapper.find("Welcome")).toHaveLength(1);
-  });
-  it("Does change state based on user typing their name", () => {
-    const wrapper = shallow(<App />);
-    wrapper.find("input").simulate("change", {
-      target: { name: "name", value: "Gavin" }
-    });
-    expect(wrapper.state("name")).toEqual("Gavin");
   });
 });

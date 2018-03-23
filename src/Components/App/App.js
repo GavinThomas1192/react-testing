@@ -8,27 +8,31 @@ class App extends Component {
     super(props);
     this.state = {
       name: "",
-      showWelcome: false
+      showWelcome: false,
+      error: ""
     };
   }
   handleChange = e => {
+    !/^[a-zA-Z]+$/.test(e.target.value)
+      ? this.setState({ error: "Whoops, letters only please" })
+      : this.setState({ error: "" });
     this.setState({ name: e.target.value });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    this.setState({ showWelcome: true });
+    !this.state.error ? this.setState({ showWelcome: true }) : undefined;
   };
 
-  // componentDidUpdate() {
-  //   console.log(this.state);
-  // }
+  componentDidUpdate() {
+    console.log(this.state);
+  }
   render() {
     return (
       <div className="App">
         <div className="formDiv">
           <form className={"basicForm"} onSubmit={this.handleSubmit}>
-            <label>
+            <label className={this.state.error ? "inputError" : "input"}>
               Name:
               <input type="text" name="name" onChange={this.handleChange} />
             </label>
@@ -36,6 +40,13 @@ class App extends Component {
               Submit
             </button>
           </form>{" "}
+          <div>
+            {this.state.error ? (
+              <p>Whoops your name can only have letters!</p>
+            ) : (
+              undefined
+            )}
+          </div>
         </div>
         {this.state.showWelcome ? (
           <div>
